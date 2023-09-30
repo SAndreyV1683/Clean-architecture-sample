@@ -1,19 +1,21 @@
 package a.sboev.cleanarchitecturesample.presentation
 
 import a.sboev.cleanarchitecturesample.R
+import a.sboev.cleanarchitecturesample.data.repository.UserRepositoryImpl
 import a.sboev.cleanarchitecturesample.domain.models.SaveUserNameParam
 import a.sboev.cleanarchitecturesample.domain.usecase.GetUserNameUseCase
 import a.sboev.cleanarchitecturesample.domain.usecase.SaveUserNameUseCase
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private val getUserNameUseCase = GetUserNameUseCase()
-    private val saveUserNameUseCase = SaveUserNameUseCase()
+    private val userRepository by lazy { UserRepositoryImpl(context = applicationContext) }
+    private val getUserNameUseCase by lazy { GetUserNameUseCase(userRepository) }
+    private val saveUserNameUseCase by lazy { SaveUserNameUseCase(userRepository) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
