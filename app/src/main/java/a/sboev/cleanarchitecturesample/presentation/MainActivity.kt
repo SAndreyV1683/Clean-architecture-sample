@@ -2,6 +2,7 @@ package a.sboev.cleanarchitecturesample.presentation
 
 import a.sboev.cleanarchitecturesample.R
 import a.sboev.cleanarchitecturesample.data.repository.UserRepositoryImpl
+import a.sboev.cleanarchitecturesample.data.storage.SharedPrefUserStorage
 import a.sboev.cleanarchitecturesample.domain.models.SaveUserNameParam
 import a.sboev.cleanarchitecturesample.domain.usecase.GetUserNameUseCase
 import a.sboev.cleanarchitecturesample.domain.usecase.SaveUserNameUseCase
@@ -13,7 +14,8 @@ import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private val userRepository by lazy { UserRepositoryImpl(context = applicationContext) }
+    private val sharedPrefUserStorage by lazy { SharedPrefUserStorage(context = applicationContext) }
+    private val userRepository by lazy { UserRepositoryImpl(sharedPrefUserStorage) }
     private val getUserNameUseCase by lazy { GetUserNameUseCase(userRepository) }
     private val saveUserNameUseCase by lazy { SaveUserNameUseCase(userRepository) }
 
